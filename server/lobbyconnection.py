@@ -542,7 +542,11 @@ Thanks,\n\
             # since the legacy uid.dll generated JSON is flawed,
             # there's a new JSON format, starting with '2' as magic byte
             if decoded.startswith('2'):
-                data = json.loads(decoded[1:])
+                try
+                  data = json.loads(decoded[1:])
+                except json.decoder.JSONDecodeError as ex:
+                  self._logger.warning("Error decoding JSON string: '{}'".format(decoded[1:]))
+                  raise ex
                 if str(data['session']) != str(self.session) :
                     self.sendJSON(dict(command="notice", style="error", text="Your session is corrupted. Try relogging"))
                     return None
