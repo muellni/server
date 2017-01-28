@@ -157,7 +157,8 @@ class GameConnection(GpgNetServerProtocol):
         self.send_JoinGame(peer.player.login,
                            peer.player.id)
         peer.send_ConnectToPeer(self.player.login,
-                                self.player.id)
+                                self.player.id,
+                                True)
 
     async def ConnectToPeer(self, peer):
         """
@@ -165,9 +166,11 @@ class GameConnection(GpgNetServerProtocol):
         :return: None
         """
         self.send_ConnectToPeer(peer.player.login,
-                                peer.player.id)
+                                peer.player.id,
+                                True)
         peer.send_ConnectToPeer(self.player.login,
-                                self.player.id)
+                                self.player.id,
+                                False)
 
     async def handle_action(self, command, args):
         """
@@ -298,21 +301,21 @@ class GameConnection(GpgNetServerProtocol):
                                          "VALUES (%s, %s, %s, %s);",
                                          (teamkiller_id, victim_id, self.game.id, gametime))
 
-            elif command == 'SdpRecord':
+            elif command == 'IceMsg':
                 receiver_id = int(args[0])
-                sdp_record = args[1]
+                ice_msg = args[1]
 
                 peer = self.player_service.get_player(receiver_id)
                 if not peer:
-                    self._logger.info("Ignoring SDP record for unknown player: %s", receiver_id)
+                    self._logger.info("Ignoring ICE message for unknown player: %s", receiver_id)
                     return
 
                 game_connection = peer.game_connection
                 if not game_connection:
-                    self._logger.info("Ignoring SDP for player without game connection: %s", receiver_id)
+                    self._logger.info("Ignoring ICE message for player without game connection: %s", receiver_id)
                     return
 
-                game_connection.send_message(dict(command="SdpRecord", args=[int(self.player.id), sdp_record]))
+                game_connection.send_message(dict(command="IceMsg", args=[int(self.player.id), ice_msg]))
 
         except AuthenticationError as e:
             self.log.exception("Authentication error: %s", e)
