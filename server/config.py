@@ -68,3 +68,6 @@ API_TOKEN_URI = os.getenv("API_TOKEN_URI", "https://api.dev.faforever.com/jwt/au
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api.dev.faforever.com/jwt")
 
 FAF_POLICY_SERVER_BASE_URL = os.getenv("FAF_POLICY_SERVER_BASE_URL", "http://faf-policy-server")
+
+TWILIO_SID = os.getenv("TWILIO_SID", "")
+TWILIO_KEY = os.getenv("TWILIO_KEY", "")
