@@ -938,7 +938,7 @@ class LobbyConnection:
     def command_nts(self, message):
         out = dict(command="command_nts")
 
-        token = self.nts_client.get_token()
+        token = self.nts_client.fetch_token()
 
         out['IceServers'] = token['IceServers']
         out['DateCreated'] = token['DateCreated']
