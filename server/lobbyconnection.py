@@ -818,6 +818,7 @@ Thanks,\n\
         self._logger.debug("Restoring game session of player %s to game %s", self.player, game)
         self.game_connection = GameConnection(self.loop, self, self.player_service, self.game_service, self.player,
                                               game, GameConnectionState.CONNECTED_TO_HOST)
+        self.player.game_connection = self.game_connection
         game.add_game_connection(self.game_connection)
         self.player.state = PlayerState.PLAYING
 
