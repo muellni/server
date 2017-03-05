@@ -72,3 +72,6 @@ FAF_POLICY_SERVER_BASE_URL = os.getenv("FAF_POLICY_SERVER_BASE_URL", "http://faf
 TWILIO_SID = os.getenv("TWILIO_SID", "")
 TWILIO_KEY = os.getenv("TWILIO_KEY", "")
 TWILIO_TTL = os.getenv("TWILIO_TTL", None)
+
+COTURN_URLS = os.getenv('COTURN_URLS', "").split(',')
+COTURN_KEYS = os.getenv('COTURN_KEYS', "").split(',')
