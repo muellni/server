@@ -6,7 +6,7 @@ import asyncio
 from functools import partial
 from twilio.rest import TwilioRestClient
 
-from server.config import TWILIO_SID, TWILIO_KEY, TWILIO_TTL
+from server.config import TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET, TWILIO_TTL
 
 class TwilioNTS:
     """
@@ -24,9 +24,12 @@ class TwilioNTS:
         :param sid str: Twilio Account Sid
         :param key str: Twilio Auth Token
         """
-        self.twilio_sid = sid or TWILIO_SID
-        self.twilio_key = key or TWILIO_KEY
-        self.client = TwilioRestClient(self.twilio_sid, self.twilio_key)
+        self.twilio_account_sid = sid or TWILIO_ACCOUNT_SID
+        self.twilio_api_key = key or TWILIO_API_KEY
+        self.twilio_api_secret = key or TWILIO_API_SECRET
+        self.client = TwilioRestClient(request_account=self.twilio_account_sid,
+                                       token=self.twilio_api_secret,
+                                       account=self.twilio_api_key)
 
     async def fetch_token(self, ttl=None):
         """
