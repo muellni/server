@@ -92,9 +92,9 @@ Can be combined !, e.g. `{command: social, teaminvite: <...>, friends: <..>}`
 * `{command: avatar, action: list_avatar}`: Send a list of available avatars
 * `{command: avatar, action: select, avatar: <avatar_url>}`: Select a valid avatar for the player
 
-##### Twilio NTS
+##### ICE Servers
 
-* `{command: ice_servers}`: Send ICE TURN/STUN servers - Returns: `{command: ice_servers, : <ice servers>, date_created: <date token was created in rfc 2822 format>, ttl: <ttl in seconds>}`
+* `{command: ice_servers}`: Send ICE TURN/STUN servers - Returns: `{command: ice_servers, : <ice servers>, date_created: <date token was created in ISO 8601 format>, ttl: <ttl in seconds>}`
 
 ##### Misc
 
