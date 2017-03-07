@@ -9,6 +9,7 @@ http://stackoverflow.com/a/35767224
 import time
 import hmac
 import base64
+from hashlib import sha1
 from server.config import COTURN_HOSTS, COTURN_KEYS, TWILIO_TTL
 
 class CoturnHMAC:
@@ -25,14 +26,13 @@ class CoturnHMAC:
         else:
             ttl = 3600*24
 
-
+        # See https://github.com/coturn/coturn/wiki/turnserver#turn-rest-api
         # create hmac of coturn_key + timestamp:username
         timestamp = int(time.time()) + ttl
         token_name = "{}:{}".format(timestamp, username)
 
         for coturn_host, coturn_key in zip(self.coturn_hosts, self.coturn_keys):
-            secret = hmac.new(coturn_key.encode())
-            secret.update(str(token_name).encode())
+            secret = hmac.new(coturn_key.encode(), str(token_name).encode(), sha1)
             auth_token = base64.b64encode(secret.digest()).decode()
 
             servers.append(dict(urls=["turn:{}?transport=tcp".format(coturn_host),
