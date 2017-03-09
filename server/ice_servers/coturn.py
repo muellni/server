@@ -39,6 +39,7 @@ class CoturnHMAC:
                                       "turn:{}?transport=udp".format(coturn_host),
                                       "stun:{}".format(coturn_host)],
                                 username=token_name,
-                                credential=auth_token))
+                                credential=auth_token,
+                                credentialType="token"))
 
         return servers
