@@ -68,8 +68,7 @@ API_BASE_URL = os.getenv("API_BASE_URL", "https://api.dev.faforever.com/jwt")
 FAF_POLICY_SERVER_BASE_URL = os.getenv("FAF_POLICY_SERVER_BASE_URL", "http://faf-policy-server")
 
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
-TWILIO_API_KEY = os.getenv("TWILIO_API_KEY", "")
-TWILIO_API_SECRET = os.getenv("TWILIO_API_SECRET", "")
+TWILIO_TOKEN = os.getenv("TWILIO_TOKEN", "")
 TWILIO_TTL = os.getenv("TWILIO_TTL", None)
 
 COTURN_HOSTS = os.getenv('COTURN_HOSTS', "").split(',')
