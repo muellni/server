@@ -4,9 +4,9 @@ Twilio API NTS token
 
 import asyncio
 from functools import partial
-from twilio.rest import TwilioRestClient
+from twilio.rest import Client as TwilioRestClient
 
-from server.config import TWILIO_ACCOUNT_SID, TWILIO_API_KEY, TWILIO_API_SECRET, TWILIO_TTL
+from server.config import TWILIO_ACCOUNT_SID, TWILIO_TOKEN, TWILIO_TTL
 
 class TwilioNTS:
     """
@@ -14,7 +14,7 @@ class TwilioNTS:
 
     Creates a new twilio NTS token once per hour.
     """
-    def __init__(self, sid=None, key=None):
+    def __init__(self, sid=None, token=None):
         """
         Constructor
 
@@ -25,11 +25,8 @@ class TwilioNTS:
         :param key str: Twilio Auth Token
         """
         self.twilio_account_sid = sid or TWILIO_ACCOUNT_SID
-        self.twilio_api_key = key or TWILIO_API_KEY
-        self.twilio_api_secret = key or TWILIO_API_SECRET
-        self.client = TwilioRestClient(request_account=self.twilio_account_sid,
-                                       token=self.twilio_api_secret,
-                                       account=self.twilio_api_key)
+        self.twilio_token = token or TWILIO_TOKEN
+        self.client = TwilioRestClient(self.twilio_account_sid, self.twilio_token)
 
     async def fetch_token(self, ttl=None):
         """
