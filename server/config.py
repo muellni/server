@@ -36,11 +36,15 @@ VERIFICATION_HASH_SECRET = os.getenv("VERIFICATION_HASH_SECRET", "")
 VERIFICATION_SECRET_KEY = os.getenv("VERIFICATION_SECRET_KEY", "")
 
 PRIVATE_KEYS = []
+AES_KEY_BASE64_SIZES = []
 PRIVATE_KEY_BLOBS = os.getenv("FAF_PRIVATE_KEY", '').split(';')
 print('CONFIG: {} private key blobs found in env'.format(len(PRIVATE_KEY_BLOBS)), file=sys.stderr)
 for KEYBLOB in PRIVATE_KEY_BLOBS:
     try:
         PRIVATE_KEYS.append(rsa.PrivateKey.load_pkcs1(base64.b64decode(KEYBLOB), format='DER'))
+        _aes_key_base64_size = 4*PRIVATE_KEY.n.bit_length()/24
+        _aes_key_base64_size = _aes_key_base64_size + 3 - ((_aes_key_base64_size + 3)%4) # round to multiple of 4
+        AES_KEY_BASE64_SIZES.append(_aes_key_base64_size)
     except:
         pass
 print('CONFIG: {} private keys loaded'.format(len(PRIVATE_KEYS)), file=sys.stderr)
