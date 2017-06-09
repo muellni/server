@@ -45,7 +45,7 @@ for KEYBLOB in PRIVATE_KEY_BLOBS:
         PRIVATE_KEY = rsa.PrivateKey.load_pkcs1(base64.b64decode(KEYBLOB), format='DER')
         keybits = PRIVATE_KEY.n.bit_length() + 7 - ((PRIVATE_KEY.n.bit_length() + 7)%8) # round up to multiple of 8 (byte)
         _aes_key_base64_size = 4*keybits/24
-        _aes_key_base64_size = _aes_key_base64_size + 3 - ((_aes_key_base64_size + 3)%4) # round to multiple of 4
+        _aes_key_base64_size = int(_aes_key_base64_size + 3 - ((_aes_key_base64_size + 3)%4)) # round to multiple of 4
         PRIVATE_KEYS.append(PRIVATE_KEY)
         AES_KEY_BASE64_SIZES.append(_aes_key_base64_size)
         print('CONFIG: Loaded {}bit rsa key, aes key size {}'.format(keybits, _aes_key_base64_size), file=sys.stderr)
