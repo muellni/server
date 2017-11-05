@@ -974,13 +974,13 @@ class LobbyConnection:
     async def command_ice_servers(self, message):
         if self.player:
 
-            twilio_token = await self.nts_client.fetch_token()
-            coturns = self.coturn_generator.fetch_token(self.player.id, twilio_token['ttl'])
-
-            twilio_token['ice_servers'] = coturns + twilio_token['ice_servers']
+            ice_servers = self.coturn_generator.fetch_token(self.player.id, twilio_token['ttl'])
+            if self.nts_client:
+                twilio_token = await self.nts_client.fetch_token()
+                ice_servers = ice_servers + twilio_token['ice_servers']
 
             out = dict(command='ice_servers',
-                       **twilio_token)
+                       **ice_servers)
             self.sendJSON(out)
 
 

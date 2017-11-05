@@ -46,7 +46,7 @@ stats = aiomeasures.StatsD(config.STATSD_SERVER)
 def run_lobby_server(address: (str, int),
                      player_service: PlayerService,
                      games: GameService,
-                     nts_client: TwilioNTS,
+                     nts_client: TwilioNTS=None,
                      loop):
     """
     Run the lobby server
