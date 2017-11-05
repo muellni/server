@@ -22,7 +22,7 @@ from server.api.api_accessor import ApiAccessor
 from server.ice_servers.nts import TwilioNTS
 import server
 import server.config as config
-from server.config import DB_SERVER, DB_PORT, DB_LOGIN, DB_PASSWORD, DB_NAME
+from server.config import DB_SERVER, DB_PORT, DB_LOGIN, DB_PASSWORD, DB_NAME, TWILIO_ACCOUNT_SID
 
 if __name__ == '__main__':
     logger = logging.getLogger()
@@ -68,7 +68,11 @@ if __name__ == '__main__':
         matchmaker_queue = MatchmakerQueue('ladder1v1', players_online, games)
         players_online.ladder_queue = matchmaker_queue
 
-        twilio_nts = TwilioNTS()
+        if TWILIO_ACCOUNT_SID:
+          twilio_nts = TwilioNTS()
+        else:
+          logger.warn("Twilio not set up. You must set TWILIO_ACCOUNT_SID and TWILIO_TOKEN to use the Twilio ICE servers.")
+          twilio_nts = None
 
         ctrl_server = loop.run_until_complete(server.run_control_server(loop, players_online, games))
 
