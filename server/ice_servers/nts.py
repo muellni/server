@@ -18,8 +18,7 @@ class TwilioNTS:
         """
         Constructor
 
-        Creates a Twilio rest client, fetches a token, and creates an aiocron
-        cronjob to create a new token every hour
+        Creates a Twilio rest client
 
         :param sid str: Twilio Account Sid
         :param key str: Twilio Auth Token
